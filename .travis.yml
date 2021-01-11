@@ -1,0 +1,49 @@
+language: node_js
+
+node_js:
+  - 12
+
+before_deploy:
+  - rm -rf node_modules
+  - zip -r nutellaApi-server *
+  - mkdir -p deploy
+  - mv nutellaApi-server.zip deploy/nutellaApi-server.zip
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: nutella-build
+    region: ap-northeast-2
+    skip_cleanup: true
+    local_dir: deploy
+    wait-until-deployed: true
+    on:
+      branch: master
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: nutella-build
+    key: nutellaApi-server.zip
+    bundle_type: zip
+    application: nutellaApiServer
+    deployment_group: nutellaApiServer-group
+    region: ap-northeast-2
+    wait-until-deployed: true
+    on:
+      branch: master
+
+before_script:
+  - npm install mocha
+  - npm install -g yarn
+
+cache:
+  directories:
+    - node_modules
+
+branches:
+  only:
+    - master
+
+services:
+  - mysql

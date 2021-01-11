@@ -1,0 +1,558 @@
+openapi: 3.0.0
+info:
+  version: "1.0.0"
+  title: "Nutella API"
+  description: "Nutella API"
+
+tags:
+  - name: "Project"
+    description: "About projects"
+    externalDocs:
+      url: "http://localhost:7000"
+  - name: "Run"
+    description: "About runs"
+    externalDocs:
+      url: "http://localhost:7000"
+  - name: "Graph"
+    description: "About graphs"
+    externalDocs:
+      url: "http://localhost:7000"
+
+paths:
+  /admin/project:
+    post:
+      tags:
+        - "Project"
+      summary: 프로젝트 생성 시 정보 받음
+      requestBody:
+        description: \{\"params\" \:\} 안에 보내기
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schema/Project1"
+      responses:
+        "200":
+          description: Echo POST
+    get:
+      tags:
+        - "Project"
+      summary: my space에서 카드 6개씩 읽어올 때
+      parameters:
+        - $ref: "#/components/parameters/page"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/ProjectCard"
+
+  /admin/project/{id}:
+    get:
+      tags:
+        - "Project"
+      summary: work space에서 프로젝트 정보 받아올 때, 기본 프로젝트 한 개 정보
+      parameters:
+        - $ref: "#/components/parameters/pjId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Project2"
+    delete:
+      tags:
+        - "Project"
+      summary: 프로젝트 삭제
+      parameters:
+        - $ref: "#/components/parameters/pjId"
+      responses:
+        "200":
+          description: OK
+    put:
+      tags:
+        - "Project"
+      summary: 프로젝트 정보 업데이트
+      requestBody:
+        description: \{\"params\" \:\} 안에 보내기
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schema/Project1"
+      parameters:
+        - $ref: "#/components/parameters/pjId"
+      responses:
+        "200":
+          description: OK
+
+  /admin/projects/list:
+    get:
+      tags:
+        - "Project"
+      summary: 모든 프로젝트 이름 리스트
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Project3"
+
+  /admin/run:
+    get:
+      tags:
+        - "Run"
+      summary: mypage에서 run 10개씩 읽어올 때
+      parameters:
+        - $ref: "#/components/parameters/page"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/RunCard"
+
+  /admin/run/{id}:
+    get:
+      tags:
+        - "Run"
+      summary: workspace에서 프로젝트 id에 따라 불러오기
+      parameters:
+        - $ref: "#/components/parameters/pjId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                - $ref: "#/components/schema/Run1"
+    delete:
+      tags:
+        - "Run"
+      summary: run id로 run 삭제
+      parameters:
+        - $ref: "#/components/parameters/rId"
+      responses:
+        "200":
+          description: OK
+    put:
+      tags:
+        - "Run"
+      summary: run id로 run 이름 업데이트
+      requestBody:
+        description: \{\"params\" \:\} 안에 보내기
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schema/Run2"
+      parameters:
+        - $ref: "#/components/parameters/rId"
+
+      responses:
+        "200":
+          description: OK
+
+  /admin/graph/{id}:
+    get:
+      tags:
+        - "Graph"
+      summary: 그래프 그리기
+      parameters:
+        - $ref: "#/components/parameters/rId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/Step2"
+  /admin/hpo/key:
+    get:
+      tags:
+        - "HPO"
+      summary: hpo api key받기
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/HpoKey"
+  /admin/hpo/config/{id}:
+    get:
+      tags:
+        - "HPO"
+      summary: hpo config 정보 받기
+      parameters:
+        - $ref: "#/components/parameters/pjId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/HpoConfigGet"
+  /admin/hpo/config:
+    post:
+      tags:
+        - "HPO"
+      summary: hpo config 생성
+      requestBody:
+        description: config 데이터 전송.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schema/HpoConfigPost"
+      responses:
+        "200":
+          description: 전송 성공
+  /admin/hpo/hpoProject:
+    post:
+      tags:
+        - "HPO"
+      summary: hpo project 생성
+      requestBody:
+        description: hpo project 전송 바디.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schema/HpoProjectPost"
+      responses:
+        "200":
+          description: 전송 성공
+    get:
+      tags:
+        - "HPO"
+      summary: hpo project 정보가져오기
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/HpoProjectGet"
+
+  /admin/hpo/result/{id}:
+    get:
+      tags:
+        - "HPO"
+      summary: hpo 결과값 정보 받기
+      parameters:
+        - $ref: "#/components/parameters/pjId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/HpoRun"
+  /admin/hpo/bestResult/{id}:
+    get:
+      tags:
+        - "HPO"
+      summary: hpo 가장 적합한 값 받기
+      parameters:
+        - $ref: "#/components/parameters/pjId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/HpoBestValue"
+  /admin/hpo/importances/{id}:
+    get:
+      tags:
+        - "HPO"
+      summary: hpo 각 파라미터에 따른 하이퍼파라미터 중요도 받기.
+      parameters:
+        - $ref: "#/components/parameters/pjId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/HpoImportance"
+  /auth/register:
+    post:
+      tags:
+        - "Auth"
+      summary: 회웝가입.
+      requestBody:
+        description: 회원가입.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schema/authInfo"
+      responses:
+        "200":
+          description: 전송 성공
+  /auth/login:
+    post:
+      tags:
+        - "Auth"
+      summary: 로그인.
+      requestBody:
+        description: 로그인.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schema/authInfo"
+      responses:
+        "200":
+          description: 전송 성공
+  /auth/logout:
+    get:
+      tags:
+        - "Auth"
+      summary: 로그아웃.
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+
+components:
+  schema:
+    Project1:
+      type: "object"
+      properties:
+        projectName:
+          type: "string"
+        description:
+          type: "string"
+        privacy:
+          type: "integer"
+
+    Project2:
+      type: "object"
+      properties:
+        projectId:
+          type: "integer"
+        projectName:
+          type: "string"
+        totalRuns:
+          type: "integer"
+
+    Project3:
+      type: "object"
+      properties:
+        projectId:
+          type: "integer"
+        projectName:
+          type: "string"
+
+    ProjectCard:
+      type: "object"
+      properties:
+        projectId:
+          type: "integer"
+        projectName:
+          type: "string"
+        description:
+          type: "string"
+        privacy:
+          type: "integer"
+        totalRuns:
+          type: "integer"
+        created_at:
+          type: "string"
+
+    Run1:
+      type: "object"
+      properties:
+        runId:
+          type: "integer"
+        projectId:
+          type: "integer"
+        runName:
+          type: "string"
+        state:
+          type: "string"
+        runTime:
+          type: "string"
+        createdBy:
+          type: "string"
+        created_at:
+          type: "string"
+
+    Run2:
+      type: "object"
+      properties:
+        runId:
+          type: "integer"
+        runName:
+          type: "string"
+
+    RunCard:
+      type: "object"
+      properties:
+        runId:
+          type: "integer"
+        runName:
+          type: "string"
+        projectName:
+          type: "string"
+        state:
+          type: "string"
+        updated_at:
+          type: "string"
+
+    Step1:
+      type: "object"
+      properties:
+        stepId:
+          type: "integer"
+        stepNumber:
+          type: "integer"
+        reinit:
+          type: "boolean"
+        accuracy:
+          type: "number"
+        loss:
+          type: "number"
+        precision:
+          type: "number"
+        recall:
+          type: "number"
+        cpu:
+          type: "number"
+        gpu:
+          type: "number"
+        net:
+          type: "number"
+        disk:
+          type: "number"
+
+    Step2:
+      type: "array"
+      items:
+        type: "object"
+        properties:
+          stepNumber:
+            type: "integer"
+          indicator:
+            type: "object"
+    HpoKey:
+      type: "string"
+    HpoProjects:
+      type: "object"
+      properties:
+        projectName:
+          type: "string"
+        createBy:
+          type: "string"
+        state:
+          type: "string"
+    HpoConfigGet:
+      type: "object"
+      properties:
+        method:
+          type: "integer"
+        config:
+          type: "object"
+    HpoConfigPost:
+      type: "object"
+      properties:
+        projectName:
+          type: "string"
+        method:
+          type: "integer"
+        config:
+          type: "object"
+    HpoProjectPost:
+      type: "object"
+      properties:
+        hpoName:
+          type: "string"
+        description:
+          type: "string"
+        apiKey:
+          type: "string"
+        createBy:
+          type: "string"
+    HpoRun:
+      type: "array"
+      items:
+        type: "object"
+        properties:
+          target:
+            type: "object"
+          config:
+            type: "object"
+          runName:
+            type: "string"
+    HpoBestValue:
+      type: "object"
+      properties:
+        bestParmeter:
+          type: "object"
+    HpoImportance:
+      type: "object"
+      properties:
+        parmeter:
+          type: "string"
+        configParmeter:
+          type: "string"
+        importance:
+          type: "number"
+          format: float
+        Correlation:
+          type: "number"
+          format: float
+
+    HpoProjectGet:
+      type: "array"
+      items:
+        type: "object"
+        properties:
+          hpoName:
+            type: "string"
+          description:
+            type: "string"
+          createBy:
+            type: "string"
+
+    authInfo:
+      properties:
+        username:
+          type: "string"
+        password:
+          type: "string"
+
+  parameters:
+    # req.query.
+    page:
+      name: page
+      in: query
+      required: true
+      description: 페이지 값
+      schema:
+        type: integer
+    # req.params.
+    pjId:
+      name: id
+      in: path
+      requried: true
+      description: 프로젝트 ID 값
+      schema:
+        type: integer
+    rId:
+      name: id
+      in: path
+      requried: true
+      description: 런 ID 값
+      schema:
+        type: integer
