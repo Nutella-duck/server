@@ -8,4 +8,5 @@
 
 #DB
 .env
-authController.js
+
+/applications/auth/authorizationMW.js

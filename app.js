@@ -16,7 +16,7 @@ const authRouter = require("./routes/authRoute");
 
 const hpoRouter = require("./routes/hpoRoute");
 
-const jwtMiddleWare = require("./applications/auth/jwtMiddleware");
+// const jwtMiddleWare = require("./applications/auth/jwtMiddleware");
 
 //db.migrate.latest();
 //db.seed.run();
