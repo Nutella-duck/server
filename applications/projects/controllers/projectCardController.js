@@ -18,6 +18,7 @@ projectCardController.read = function (req, res) {
         this.count("run.projectId").as("totalRun");
       }
     )
+    .where("project.userId", res.locals.userId)
     .leftJoin("run", "project.projectId", "run.projectId")
     .as("results")
     .groupBy("project.projectId")

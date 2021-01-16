@@ -11,6 +11,7 @@ projectController.create = function (req, res) {
       description: req.body.params.description,
       privacy: req.body.params.privacy || 1,
       apiKey: req.body.params.apiKey,
+      userId: res.locals.userId
     })
     .then(() => {
       res.send("A project is created");
