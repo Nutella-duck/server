@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const MY_SECRET_KEY = process.env.SECRET_KEY;
 
 const verifyToken = (req, res, next) => {
-    const clientToken = req.headers['x-access-token'];
+    const clientToken = req.headers['access_token'];
 
     if(!clientToken){
         return res.status(400).end("Please Login");
