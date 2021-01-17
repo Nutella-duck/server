@@ -30,7 +30,7 @@ const generateToken = async (id) => {
   return token;
 }
 
-authController.login = async (req, res) =>{
+authController.login = async (req, res) => {
   const { username, password } = req.body.params;
   
   // id, pwd 모두 입력했는지 확인
@@ -58,6 +58,16 @@ authController.login = async (req, res) =>{
   });
 
   res.end("로그인 되었습니다.");
+};
+
+// 필요가 없는 것 같음
+authController.logout = async (req, res) => {
+  res.writeHead(302, {
+    'Set-Cookie': [
+      `access-token=; HttpOnly; Max-Age=0`
+    ]
+  })
+  res.end("로그아웃 되었습니다.")
 };
 
 module.exports = authController;
