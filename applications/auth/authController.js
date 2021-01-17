@@ -50,9 +50,10 @@ authController.login = async (req, res) =>{
   
   // jwt token 생성해서 쿠키로 전송
   const token = generateToken(userId);
+  console.log(token);
   res.writeHead(200, {
     'Set-Cookie': [
-        `access_token=${token}; HttpOnly; Max-Age=${60*60*24}`
+        `access-token=${token}; HttpOnly; Max-Age=${60*60*24}`
     ]
   });
 
