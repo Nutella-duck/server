@@ -17,6 +17,14 @@ tags:
     description: "About graphs"
     externalDocs:
       url: "http://localhost:7000"
+  - name: "HPO"
+    description: "HPO 프로젝트, 런 및 SDK api"
+    externalDocs:
+      url: "http://localhost:7000"
+  - name: "Auth"
+    description: "로그인, 회원가입"
+    externalDocs:
+      url: "http://localhost:7000"            
 
 paths:
   /admin/project:
@@ -281,13 +289,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schema/HpoImportance"
+
   /auth/register:
     post:
       tags:
         - "Auth"
       summary: 회웝가입.
       requestBody:
-        description: 회원가입.
+        description: \{\"params\" \:\} 안에 보내기 && username은 3글자, password는 5글자 이상 
         required: true
         content:
           application/json:
@@ -302,7 +311,7 @@ paths:
         - "Auth"
       summary: 로그인.
       requestBody:
-        description: 로그인.
+        description: \{\"params\" \:\} 안에 보내기
         required: true
         content:
           application/json:
@@ -311,18 +320,18 @@ paths:
       responses:
         "200":
           description: 전송 성공
-  /auth/logout:
-    get:
-      tags:
-        - "Auth"
-      summary: 로그아웃.
-      responses:
-        "200":
-          description: OK
-          content:
-            text/plain:
-              schema:
-                type: string
+  # /auth/logout:
+  #   get:
+  #     tags:
+  #       - "Auth"
+  #     summary: 로그아웃.
+  #     responses:
+  #       "200":
+  #         description: OK
+  #         content:
+  #           text/plain:
+  #             schema:
+  #               type: string
 
 components:
   schema:
