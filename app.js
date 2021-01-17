@@ -16,7 +16,7 @@ const authRouter = require("./routes/authRoute");
 
 const hpoRouter = require("./routes/hpoRoute");
 
-const jwtMiddleWare = require("./applications/auth/jwtMiddleware");
+const jwtMiddleWare = require("./applications/auth/authorizationMW");
 
 //db.migrate.latest();
 //db.seed.run();
@@ -40,7 +40,7 @@ app.use(express.static("swagger"));
 
 app.use("/auth", authRouter);
 
-//app.use(jwtMiddleWare); // 토큰 검증 미들웨어.
+app.use(jwtMiddleWare); // 토큰 검증 미들웨어.
 
 app.use("/admin", project);
 

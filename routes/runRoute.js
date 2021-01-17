@@ -5,7 +5,7 @@ const run = require("../applications/runs/controllers/runController.js");
 const runCard = require("../applications/runs/controllers/runCardController.js");
 //sdk 실행시 모델 생성.
 router.post("/run", run.create);
-// mypage에서 runCard 불러옴 10개씩
+// mypage에서 runCard 불러옴 10개씩 (O)
 router.get("/run", runCard.read);
 
 // workspace에서 프로젝트 id에 따라 불러오기

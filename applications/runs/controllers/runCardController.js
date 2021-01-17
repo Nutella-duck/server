@@ -8,6 +8,7 @@ runCardController.read = function (req, res) {
   
     knex("run")
       .select("run.runId", "run.runName", "run.state", "run.updated_at", "project.projectName")
+      .where("project.userId", res.locals.userId)
       .join("project", "run.projectId", "project.projectId")
       .limit(10).offset(offset)  
       .then((runCardList) => {
