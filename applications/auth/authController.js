@@ -91,7 +91,7 @@ authController.login = async (req, res) => {
     return res.status(401).end("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.");
   
   // jwt token 생성해서 쿠키로 전송
-  const token = generateToken(userId);
+  const token = await generateToken(userId);
   console.log(token);
   res.cookie("access-token", token, {
     HttpOnly: true,
