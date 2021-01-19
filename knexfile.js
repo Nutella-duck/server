@@ -19,14 +19,11 @@ module.exports = {
       database: process.env.DB_NAME,
     },
     migrations: {
+      directory: './db/migrations',
       tableName: "nutellaMigrations",
     },
+    seeds: {
+      directory: './db/seeds'
+    },
   },
-
-  // migrations: {
-  //   directory: './db/migrations'
-  // },
-  // seeds: {
-  //   directory: './db/seeds'
-  // }
 };

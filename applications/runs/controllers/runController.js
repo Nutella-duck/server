@@ -3,24 +3,24 @@ const knex = require("../../../db/knex");
 
 let runController = {};
 
-runController.create = function (req, res) {
-  console.log(req.body);
-  const { runName, projectKey } = req.body;
-  console.log(runName + " " + projectKey);
-  knex
-    .insert({
-      runName: runName,
-      state: "CREATED", // 미정
-      reinit: false, // 미정
-      runTime: 0, // 미정
-      createdBy: "project", // 미정
-      projectId: 1,
-    })
-    .into("run")
-    .then((result) => {
-      res.end("success");
-    });
-};
+// runController.create = function (req, res) {
+//   console.log(req.body);
+//   const { runName, projectKey } = req.body;
+//   console.log(runName + " " + projectKey);
+//   knex
+//     .insert({
+//       runName: runName,
+//       state: "CREATED", // 미정
+//       reinit: false, // 미정
+//       runTime: 0, // 미정
+//       createdBy: "project", // 미정
+//       projectId: 1,
+//     })
+//     .into("run")
+//     .then((result) => {
+//       res.end("success");
+//     });
+// };
 runController.read = function (req, res) {
   knex("run")
     .select()
