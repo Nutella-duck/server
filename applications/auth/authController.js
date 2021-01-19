@@ -50,6 +50,13 @@ const saveUserInfo = async (id, nick, pwd) => {
     .insert({ userId: id, nickName: nick, password: pwd })
 }
 
+// 로그인하면서 발급된 토큰 저장 => 여러 토큰 저장하도록 수정 필요 update
+const saveTokenInfo = async (id, token) => {
+  return knex("user")
+    .update({ tokens: token })
+    .where({ userId: id })
+};
+
 authController.register = async (req, res) => {
   // id는 3글자 이상, pwd는 5글자 이상 되도록 확인
   const schema = Joi.object().keys({
@@ -98,7 +105,8 @@ authController.login = async (req, res) => {
     HttpOnly: true,
     MaxAge: 60*60*24,
   });
-
+  // token 저장 (한 개만 가능)
+  await saveTokenInfo(userId, token);
   res.end("로그인 되었습니다.");
 };
 
