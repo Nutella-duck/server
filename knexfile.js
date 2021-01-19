@@ -4,8 +4,8 @@ const env = require("./properties/Config.json");
 
 let configData =
   env.local.trim() == "development"
-    ? require("./properties/LocalConfig.json")
-    : require("./properties/ServerConfig.json");
+    ? require("./db/properties/LocalConfig.json")
+    : require("./db/properties/ServerConfig.json");
 
 dotenv.config({ path: path.join(__dirname, configData.dir) });
 
