@@ -57,6 +57,13 @@ const saveTokenInfo = async (id, token) => {
     .where({ userId: id })
 };
 
+// 로그아웃 시 토큰 삭제
+const deleteToken = async (id) => {
+  return knex("user")
+    .update({ tokens: null })
+    .where({ userId: id })
+};
+
 authController.register = async (req, res) => {
   // id는 3글자 이상, pwd는 5글자 이상 되도록 확인
   const schema = Joi.object().keys({
@@ -108,6 +115,17 @@ authController.login = async (req, res) => {
   // token 저장 (한 개만 가능)
   await saveTokenInfo(userId, token);
   res.end("로그인 되었습니다.");
+};
+
+authController.logout = async (req, res) => {
+  const { userId } = req.body.params;
+  res.writeHead(302, {
+    'Set-Cookie': [
+      `access-token=; HttpOnly; Max-Age=0`
+    ]
+  })
+  await deleteToken(userId);
+  res.end("로그아웃 되었습니다.")
 };
 
 module.exports = authController;
