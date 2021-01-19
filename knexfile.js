@@ -1,6 +1,6 @@
 const dotenv = require("dotenv");
 const path = require("path");
-const env = require("./properties/Config.json");
+const env = require("./db/properties/Config.json");
 
 let configData =
   env.local.trim() == "development"

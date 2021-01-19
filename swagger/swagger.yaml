@@ -294,14 +294,14 @@ paths:
     post:
       tags:
         - "Auth"
-      summary: 회웝가입.
+      summary: 회원가입.
       requestBody:
-        description: \{\"params\" \:\} 안에 보내기 && username은 3글자, password는 5글자 이상 
+        description: \{\"params\" \:\} 안에 보내기 && userId는 3글자, password는 5글자 이상 
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schema/authInfo"
+              $ref: "#/components/schema/registerInfo"
       responses:
         "200":
           description: 전송 성공
@@ -536,7 +536,16 @@ components:
 
     authInfo:
       properties:
-        username:
+        userId:
+          type: "string"
+        password:
+          type: "string"
+
+    registerInfo:
+      properties:
+        userId:
+          type: "string"
+        nickName:
           type: "string"
         password:
           type: "string"
