@@ -23,7 +23,7 @@ return knex("user")
     .insert({ userId: id, nickName: nick, password: pwd })
 }
 
-authController.register = async (req, res) => {
+registerController.register = async (req, res) => {
     // id는 3글자 이상, pwd는 5글자 이상 되도록 확인
     const schema = Joi.object().keys({
       userId: Joi.string().alphanum().min(3).required(),
