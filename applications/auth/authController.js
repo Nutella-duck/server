@@ -23,6 +23,16 @@ const checkIdExist = async (id, pwd) => {
     })
 }
 
+// 해당 user의 nickName 반환
+const getUserNick = async (id) => {
+  return knex("user")
+    .select("nickName")
+    .where({ userId: id })
+    .then(user => {
+      return user[0].nickName;
+    })
+}
+
 // userId 정보를 담고있는 jwt token 반환
 const generateToken = async (id) => {
   const MY_SECRET_KEY = process.env.SECRET_KEY;
@@ -62,13 +72,19 @@ authController.login = async (req, res) => {
   if (!checkExistence)
     return res.status(401).end("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.");
   
-  // jwt token 생성해서 쿠키로 전송
+  // user 닉네임 가져오고 jwt token 생성해서 쿠키로 전송 
+  const nickName = await getUserNick(userId);
   const token = await generateToken(userId);
   console.log(token);
   res.cookie("access-token", token, {
     HttpOnly: true,
     MaxAge: 60*60*24,
   });
+  res.cookie("nickname", nickName, {
+    HttpOnly: true,
+    MaxAge: 60*60*24,
+  });
+  
   // token 저장 (한 개만 가능)
   await saveTokenInfo(userId, token);
   res.end("로그인 되었습니다.");

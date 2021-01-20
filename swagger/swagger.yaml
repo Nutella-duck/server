@@ -309,7 +309,7 @@ paths:
     post:
       tags:
         - "Auth"
-      summary: 로그인.
+      summary: 로그인. 쿠키로 토큰이랑 닉네임 전송됨
       requestBody:
         description: \{\"params\" \:\} 안에 보내기
         required: true
