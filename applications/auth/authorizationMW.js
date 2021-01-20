@@ -19,12 +19,14 @@ const checkTokenExist = async (token) => {
 
 const verifyToken = async (req, res, next) => {
     const clientToken = req.headers['access-token'];
+    if(!clientToken){
+        console.log("토큰을 보내세요.")
+        return res.status(400).end("Please Login"); 
+    }
 
     const tokenExistence = await checkTokenExist(clientToken);
-
-    if(!clientToken || !tokenExistence){
+    if(!tokenExistence)
         return res.status(400).end("Please Login");
-    }
 
     try {
         const decoded = jwt.verify(clientToken, MY_SECRET_KEY);

@@ -380,9 +380,7 @@ components:
           type: "integer"
         totalRuns:
           type: "integer"
-        created_at:
-          type: "string"
-
+          
     Run1:
       type: "object"
       properties:
