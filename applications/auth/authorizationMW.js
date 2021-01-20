@@ -1,10 +1,28 @@
 const jwt = require("jsonwebtoken");
+const knex = require("../../db/knex");
 const MY_SECRET_KEY = process.env.SECRET_KEY;
 
-const verifyToken = (req, res, next) => {
+// 만료되지 않은 토큰인지
+const checkTokenExist = async (token) => {
+    return knex("user")
+        .select()
+        .where({ tokens: token })
+        .then(user => {
+        // 존재하는 id인지 확인
+        if(Object.keys(user).length==0) {
+          console.log("this token doesn't exist"); 
+          return 0;
+        } 
+        return 1;
+      })
+  }
+
+const verifyToken = async (req, res, next) => {
     const clientToken = req.headers['access-token'];
 
-    if(!clientToken){
+    const tokenExistence = await checkTokenExist(clientToken);
+
+    if(!clientToken || !tokenExistence){
         return res.status(400).end("Please Login");
     }
 

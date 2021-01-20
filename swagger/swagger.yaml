@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   version: "1.0.0"
   title: "Nutella API"
-  description: "Nutella API"
+  description: "Nutella API / Auth 말고는 모두 헤더에 access-token 보내기"
 
 tags:
   - name: "Project"
@@ -320,18 +320,22 @@ paths:
       responses:
         "200":
           description: 전송 성공
-  # /auth/logout:
-  #   get:
-  #     tags:
-  #       - "Auth"
-  #     summary: 로그아웃.
-  #     responses:
-  #       "200":
-  #         description: OK
-  #         content:
-  #           text/plain:
-  #             schema:
-  #               type: string
+  /auth/logout:
+    post:
+      tags:
+        - "Auth"
+      summary: 로그아웃.
+      requestBody:
+        description: \{\"params\" \:\} 안에 보내기
+        required: true
+        content:
+          application/json:
+            schema:
+              userId:
+                type: "string"
+      responses:
+        "200":
+          description: 전송 성공  
 
 components:
   schema:
@@ -548,7 +552,7 @@ components:
         nickName:
           type: "string"
         password:
-          type: "string"
+          type: "string"       
 
   parameters:
     # req.query.

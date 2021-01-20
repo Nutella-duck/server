@@ -57,8 +57,8 @@ const saveTokenInfo = async (id, token) => {
     .where({ userId: id })
 };
 
-// 로그아웃 시 토큰 삭제
-const deleteToken = async (id) => {
+// 로그아웃 시 토큰 삭제 => token 있는지 보고 있으면 해당 토큰만 삭제하도록 수정 필요
+const deleteToken = async (id, token) => {
   return knex("user")
     .update({ tokens: null })
     .where({ userId: id })
@@ -119,12 +119,13 @@ authController.login = async (req, res) => {
 
 authController.logout = async (req, res) => {
   const { userId } = req.body.params;
+  const clientToken = req.headers['access-token'];
   res.writeHead(302, {
     'Set-Cookie': [
       `access-token=; HttpOnly; Max-Age=0`
     ]
   })
-  await deleteToken(userId);
+  await deleteToken(userId, clientToken);
   res.end("로그아웃 되었습니다.")
 };
 
