@@ -29,10 +29,10 @@ registerController.register = async (req, res) => {
       userId: Joi.string().alphanum().min(3).required(),
       nickname: Joi.string().required(),
       password: Joi.string().min(5).required(),
-      email: Joi.string(),
-      company: Joi.string(),
-      location: Joi.string(),
-      introduction: Joi.string(),
+      email: Joi.string().allow(null),
+      company: Joi.string().allow(null),
+      location: Joi.string().allow(null),
+      introduction: Joi.string().allow(null),
     });
   
     if(schema.validate(req.body.params).error)
