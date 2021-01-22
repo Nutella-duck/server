@@ -2,11 +2,12 @@ exports.up = function (knex) {
   return knex.schema
     .createTableIfNotExists("hpoProject", (table) => {
       table.increments("hpoProjectId").primary();
+      table.string("userId");
       table.string("hpoName").notNullable();
       table.string("description");
       table.string("apiKey");
-      table.string("createBy");
       table.string("state");
+      table.foreign("userId").references("user.userId");
     })
     .createTableIfNotExists("hpoConfig", (table) => {
       table.increments("hpoConfigId").primary();

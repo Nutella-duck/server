@@ -1,11 +1,11 @@
 const dotenv = require("dotenv");
 const path = require("path");
-const env = require("./properties/Config.json");
+const env = require("./db/properties/Config.json");
 
 let configData =
   env.local.trim() == "development"
-    ? require("./properties/LocalConfig.json")
-    : require("./properties/ServerConfig.json");
+    ? require("./db/properties/LocalConfig.json")
+    : require("./db/properties/ServerConfig.json");
 
 dotenv.config({ path: path.join(__dirname, configData.dir) });
 
@@ -19,14 +19,11 @@ module.exports = {
       database: process.env.DB_NAME,
     },
     migrations: {
+      directory: './db/migrations',
       tableName: "nutellaMigrations",
     },
+    seeds: {
+      directory: './db/seeds'
+    },
   },
-
-  // migrations: {
-  //   directory: './db/migrations'
-  // },
-  // seeds: {
-  //   directory: './db/seeds'
-  // }
 };

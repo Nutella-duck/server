@@ -1,8 +1,8 @@
-const knex = require("../../../db/knex");
+const knex = require("../../db/knex");
 
-let runCardController = {};
+let allRunsController = {};
 
-runCardController.read = function (req, res) {
+allRunsController.card = function (req, res) {
     let pageNum = req.query.page;
     let offset = pageNum > 1 ? 10 * (pageNum - 1) : 0;
   
@@ -16,4 +16,4 @@ runCardController.read = function (req, res) {
       });
 }
 
-module.exports = runCardController;
+module.exports = allRunsController;
