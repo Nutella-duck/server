@@ -18,9 +18,9 @@ const newIdChecker = async (id) => {
 }
   
 // 사용자 정보 디비에 저장
-const saveUserInfo = async (id, nick, pwd) => {
+const saveUserInfo = async (id, nick, pwd, email, comp, loc, intro) => {
 return knex("user")
-    .insert({ userId: id, nickname: nick, password: pwd })
+  .insert({ userId: id, nickname: nick, password: pwd, email: email, company: comp, location: loc, introduction: intro })
 }
 
 registerController.register = async (req, res) => {
@@ -29,19 +29,23 @@ registerController.register = async (req, res) => {
       userId: Joi.string().alphanum().min(3).required(),
       nickname: Joi.string().required(),
       password: Joi.string().min(5).required(),
+      email: Joi.string(),
+      company: Joi.string(),
+      location: Joi.string(),
+      introduction: Joi.string(),
     });
   
     if(schema.validate(req.body.params).error)
-      return res.status(401).end("아이디는 3자 이상, 비밀번호는 5자이상 입력해주십시오.");
+      return res.status(401).end("닉네임은 1자 이상, 아이디는 3자 이상, 비밀번호는 5자이상 입력해주십시오.");
     
-    const { userId, nickname, password } = req.body.params;
+    const { userId, nickname, password, email, company, location, introduction } = req.body.params;
   
     // 존재하는 id인지 확인
     const isNewId = await newIdChecker(userId);
-    if(!isNewId) return res.status(401).end("이미 존재하는 아이디입니다.");
+    if(!isNewId) return res.status(401) .end("이미 존재하는 아이디입니다.");
     
     // db에 저장
-    await saveUserInfo(userId, nickname, password);
+    await saveUserInfo(userId, nickname, password, email, company, location, introduction );
   
     return res.end("회원가입 되었습니다.");
 };

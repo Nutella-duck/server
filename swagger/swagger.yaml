@@ -547,10 +547,18 @@ components:
       properties:
         userId:
           type: "string"
-        nickName:
+        nickname:
           type: "string"
         password:
-          type: "string"       
+          type: "string" 
+        email:
+          type: "string"         
+        company:
+          type: "string"         
+        location:
+          type: "string"         
+        introduction:    
+          type: "string"           
 
   parameters:
     # req.query.

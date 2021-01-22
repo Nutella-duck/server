@@ -4,6 +4,10 @@ exports.up = function (knex) {
     table.string("nickname").notNullable();
     table.unique(["userId"]);
     table.string("password").notNullable();
+    table.string("email");
+    table.string("company");
+    table.string("location");
+    table.string("introduction");
     table.string("tokens");
   });
 };
