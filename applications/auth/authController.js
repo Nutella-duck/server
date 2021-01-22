@@ -76,18 +76,23 @@ authController.login = async (req, res) => {
   const nickName = await getUserNick(userId);
   const token = await generateToken(userId);
   console.log(token);
-  res.cookie("access-token", token, {
-    HttpOnly: true,
-    MaxAge: 60*60*24,
-  });
-  res.cookie("nickname", nickName, {
-    HttpOnly: true,
-    MaxAge: 60*60*24,
-  });
+  // res.cookie("access-token", token, {
+  //   HttpOnly: true,
+  //   MaxAge: 60*60*24,
+  // });
+  // res.cookie("nickname", nickName, {
+  //   HttpOnly: true,
+  //   MaxAge: 60*60*24,
+  // });
   
   // token 저장 (한 개만 가능)
   await saveTokenInfo(userId, token);
-  res.end("로그인 되었습니다.");
+
+  var data = new Object();
+  data.token = token;
+  data.nickname = nickName;
+
+  res.end(JSON.stringify(data));
 };
 
 authController.logout = async (req, res) => {
