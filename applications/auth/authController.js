@@ -23,13 +23,13 @@ const checkIdExist = async (id, pwd) => {
     })
 }
 
-// 해당 user의 nickName 반환
+// 해당 user의 nickname 반환
 const getUserNick = async (id) => {
   return knex("user")
-    .select("nickName")
+    .select("nickname")
     .where({ userId: id })
     .then(user => {
-      return user[0].nickName;
+      return user[0].nickname;
     })
 }
 
@@ -73,24 +73,16 @@ authController.login = async (req, res) => {
     return res.status(401).end("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.");
   
   // user 닉네임 가져오고 jwt token 생성해서 쿠키로 전송 
-  const nickName = await getUserNick(userId);
+  const nickname = await getUserNick(userId);
   const token = await generateToken(userId);
   console.log(token);
-  // res.cookie("access-token", token, {
-  //   HttpOnly: true,
-  //   MaxAge: 60*60*24,
-  // });
-  // res.cookie("nickname", nickName, {
-  //   HttpOnly: true,
-  //   MaxAge: 60*60*24,
-  // });
   
   // token 저장 (한 개만 가능)
   await saveTokenInfo(userId, token);
 
   var data = new Object();
   data.token = token;
-  data.nickname = nickName;
+  data.nickname = nickname;
 
   res.end(JSON.stringify(data));
 };

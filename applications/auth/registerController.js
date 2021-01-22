@@ -20,28 +20,28 @@ const newIdChecker = async (id) => {
 // 사용자 정보 디비에 저장
 const saveUserInfo = async (id, nick, pwd) => {
 return knex("user")
-    .insert({ userId: id, nickName: nick, password: pwd })
+    .insert({ userId: id, nickname: nick, password: pwd })
 }
 
 registerController.register = async (req, res) => {
     // id는 3글자 이상, pwd는 5글자 이상 되도록 확인
     const schema = Joi.object().keys({
       userId: Joi.string().alphanum().min(3).required(),
-      nickName: Joi.string().required(),
+      nickname: Joi.string().required(),
       password: Joi.string().min(5).required(),
     });
   
     if(schema.validate(req.body.params).error)
       return res.status(401).end("아이디는 3자 이상, 비밀번호는 5자이상 입력해주십시오.");
     
-    const { userId, nickName, password } = req.body.params;
+    const { userId, nickname, password } = req.body.params;
   
     // 존재하는 id인지 확인
     const isNewId = await newIdChecker(userId);
     if(!isNewId) return res.status(401).end("이미 존재하는 아이디입니다.");
     
     // db에 저장
-    await saveUserInfo(userId, nickName, password);
+    await saveUserInfo(userId, nickname, password);
   
     return res.end("회원가입 되었습니다.");
 };
