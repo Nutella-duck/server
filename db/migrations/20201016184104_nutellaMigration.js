@@ -16,7 +16,6 @@ exports.up = function (knex) {
       table.integer("projectId").unsigned().notNullable();
       table.string("runName").notNullable();
       table.string("state");
-      table.integer("runTime");
       table.foreign("projectId").references("project.projectId");
       table.timestamps(true, true);
     })
