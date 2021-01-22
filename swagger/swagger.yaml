@@ -5,6 +5,14 @@ info:
   description: "Nutella API / Auth 말고는 모두 헤더에 access-token 보내기"
 
 tags:
+  - name: "Auth"
+    description: "로그인, 회원가입"
+    externalDocs:
+      url: "http://localhost:7000"    
+  - name: "User"
+    description: "유저 정보"
+    externalDocs:
+      url: "http://localhost:7000"    
   - name: "Project"
     description: "About projects"
     externalDocs:
@@ -21,10 +29,7 @@ tags:
     description: "HPO 프로젝트, 런 및 SDK api"
     externalDocs:
       url: "http://localhost:7000"
-  - name: "Auth"
-    description: "로그인, 회원가입"
-    externalDocs:
-      url: "http://localhost:7000"            
+        
 
 paths:
   /admin/project:
@@ -55,7 +60,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schema/ProjectCard"
-
   /admin/project/{id}:
     get:
       tags:
@@ -95,7 +99,6 @@ paths:
       responses:
         "200":
           description: OK
-
   /admin/projects/list:
     get:
       tags:
@@ -123,7 +126,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schema/RunCard"
-
   /admin/run/{id}:
     get:
       tags:
@@ -164,7 +166,7 @@ paths:
       responses:
         "200":
           description: OK
-
+  
   /admin/graph/{id}:
     get:
       tags:
@@ -179,6 +181,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schema/Step2"
+  
   /admin/hpo/key:
     get:
       tags:
@@ -190,7 +193,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schema/HpoKey"
+                $ref: "#/components/schema/HpoKey"              
   /admin/hpo/config/{id}:
     get:
       tags:
@@ -336,6 +339,19 @@ paths:
       responses:
         "200":
           description: 전송 성공  
+
+  /admin/user:
+    get:
+      tags:
+        - "User"
+      summary: 현재 유저의 기본 정보 반환 (My page에서 프로필 사진 옆에 사용)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schema/userInfo"
 
 components:
   schema:
@@ -558,7 +574,22 @@ components:
         location:
           type: "string"         
         introduction:    
-          type: "string"           
+          type: "string"
+
+    userInfo:
+      properties:
+        userId:
+          type: "string"
+        nickname:
+          type: "string"
+        email:
+          type: "string"         
+        company:
+          type: "string"         
+        location:
+          type: "string"         
+        introduction:    
+          type: "string"                  
 
   parameters:
     # req.query.
