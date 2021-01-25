@@ -8,8 +8,8 @@ exports.seed = function (knex) {
       return Promise.all([
         knex("user")
           .insert([
-            {userId: "songmi11", nickname: "song", password: "12345", email: "ss@gmail.com", company: "Soma", location: "Incheon", introduction: "hi"},
-            {userId: "haein11", nickname: "hae", password: "56789", email: "hh@gmail.com", company: "Soma", location: "Seoul", introduction: "hello"}
+            {userId: "songmi11", nickname: "song", password: "$2b$10$5p1OuwZiDksoVw/kff9cjevVurBlx2zyObQvVr.WHozcnegNq5MAW", email: "ss@gmail.com", company: "Soma", location: "Incheon", introduction: "hi"},
+            {userId: "haein11", nickname: "hae", password: "$2b$10$WPliXNipu2GA88dKdDJ.aOcbUP2akIM9jFfKWnkJln7fTZ3/j2CGS", email: "hh@gmail.com", company: "Soma", location: "Seoul", introduction: "hello"}
           ])
           .then(() => {
             return knex("project").insert([
