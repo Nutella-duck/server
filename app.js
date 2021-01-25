@@ -2,6 +2,7 @@ const express = require("express");
 const knex = require("knex");
 const knexFile = require("./knexfile").development;
 const db = knex(knexFile);
+const cors = require('cors');
 
 const app = express();
 const bodyParser = require("body-parser");
@@ -19,6 +20,8 @@ const jwtMiddleWare = require("./applications/auth/authorizationMW");
 //db.migrate.latest();
 //db.seed.run();
 //db.migrate.down();
+
+app.use(cors());
 
 app.all("/*", function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
