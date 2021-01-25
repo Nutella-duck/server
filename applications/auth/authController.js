@@ -1,5 +1,6 @@
 const knex = require("../../db/knex");
 const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
 
 let authController = {};
 
@@ -14,8 +15,9 @@ const checkIdExist = async (id, pwd) => {
         console.log("this id doesn't exist"); 
         return 0;
       } 
+
       // pwd 맞는지 확인
-      if(user[0].password !== pwd) {
+      if(!bcrypt.compareSync(pwd, user[0].password)) {
         console.log("password is wrong"); 
         return 0;
       }

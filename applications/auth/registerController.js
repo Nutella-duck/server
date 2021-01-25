@@ -1,6 +1,7 @@
 const knex = require("../../db/knex");
-const jwt = require("jsonwebtoken");
 const Joi = require("joi");
+const bcrypt = require('bcrypt');
+const saltRounds = 10; 
 
 let registerController = {};
 
@@ -19,8 +20,9 @@ const newIdChecker = async (id) => {
   
 // 사용자 정보 디비에 저장
 const saveUserInfo = async (id, nick, pwd, email, comp, loc, intro) => {
-return knex("user")
-  .insert({ userId: id, nickname: nick, password: pwd, email: email, company: comp, location: loc, introduction: intro })
+  pwd = bcrypt.hashSync(pwd, saltRounds);
+  return knex("user")
+    .insert({ userId: id, nickname: nick, password: pwd, email: email, company: comp, location: loc, introduction: intro })
 }
 
 registerController.register = async (req, res) => {
