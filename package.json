@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/NutellaCoder/NutellaWeb-ApiServer#readme",
   "dependencies": {
+    "aws-sdk": "^2.836.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "cookie": "^0.4.1",
@@ -31,10 +32,13 @@
     "joi": "^17.2.1",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.6",
+    "moment": "^2.29.1",
+    "multer-s3": "^2.9.0",
     "mysql2": "^2.1.0",
     "node-rsa": "^1.1.1",
+    "nodemon": "^2.0.7",
     "sequelize": "^6.3.3",
-    "swagger": "^0.7.5",
+    "swagger": "^0.0.1",
     "swagger-jsdoc": "^4.0.0",
     "swagger-ui-express": "^4.1.4"
   }

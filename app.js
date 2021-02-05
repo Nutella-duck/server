@@ -14,7 +14,8 @@ const project = require("./routes/projectRoute");
 const run = require("./routes/runRoute");
 const sdk = require("./routes/sdkRoute");
 const hpo = require("./routes/hpoRoute");
-
+const profile = require("./routes/imageRoute");
+const fileUpload = require('express-fileupload');
 const jwtMiddleWare = require("./applications/auth/authorizationMW");
 
 //db.migrate.latest();
@@ -22,7 +23,7 @@ const jwtMiddleWare = require("./applications/auth/authorizationMW");
 //db.migrate.down();
 
 app.use(cors());
-
+app.use(fileUpload());
 app.all("/*", function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -40,7 +41,7 @@ app.use(bodyParser.json());
 app.use(express.static("swagger"));
 
 app.use("/auth", auth);
-
+app.use("/admin",profile);
 app.use(jwtMiddleWare); // 토큰 검증 미들웨어.
 
 app.use("/admin", user);
@@ -52,6 +53,7 @@ app.use("/admin", run);
 app.use("/admin", sdk);
 
 app.use("/admin", hpo);
+
 
 app.listen(port, () => {
   console.log("Express listening on port", port);
