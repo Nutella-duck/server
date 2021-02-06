@@ -3,6 +3,7 @@ const knex = require("knex");
 const knexFile = require("./knexfile").development;
 const db = knex(knexFile);
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
 
 const app = express();
 const bodyParser = require("body-parser");
@@ -14,8 +15,7 @@ const project = require("./routes/projectRoute");
 const run = require("./routes/runRoute");
 const sdk = require("./routes/sdkRoute");
 const hpo = require("./routes/hpoRoute");
-const profile = require("./routes/imageRoute");
-const fileUpload = require('express-fileupload');
+
 const jwtMiddleWare = require("./applications/auth/authorizationMW");
 
 //db.migrate.latest();
@@ -41,7 +41,6 @@ app.use(bodyParser.json());
 app.use(express.static("swagger"));
 
 app.use("/auth", auth);
-app.use("/admin",profile);
 app.use(jwtMiddleWare); // 토큰 검증 미들웨어.
 
 app.use("/admin", user);
