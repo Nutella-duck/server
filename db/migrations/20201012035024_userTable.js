@@ -9,6 +9,7 @@ exports.up = function (knex) {
     table.string("location");
     table.string("introduction");
     table.string("tokens");
+    table.string("imageUrl");
   });
 };
 

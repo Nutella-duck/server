@@ -27,6 +27,7 @@ const saveUserInfo = async (id, nick, pwd, email, comp, loc, intro) => {
 
 registerController.register = async (req, res) => {
     // id는 3글자 이상, pwd는 5글자 이상 되도록 확인
+    console.log(res)
     const schema = Joi.object().keys({
       userId: Joi.string().alphanum().min(3).required(),
       nickname: Joi.string().required(),
@@ -35,12 +36,13 @@ registerController.register = async (req, res) => {
       company: Joi.string().allow(null),
       location: Joi.string().allow(null),
       introduction: Joi.string().allow(null),
+      imageUrl: Joi.string().allow(null)
     });
   
     if(schema.validate(req.body.params).error)
       return res.status(401).end("닉네임은 1자 이상, 아이디는 3자 이상, 비밀번호는 5자이상 입력해주십시오.");
     
-    const { userId, nickname, password, email, company, location, introduction } = req.body.params;
+    const { userId, nickname, password, email, company, location, introduction, imageUrl} = req.body.params;
   
     // 존재하는 id인지 확인
     const isNewId = await newIdChecker(userId);
