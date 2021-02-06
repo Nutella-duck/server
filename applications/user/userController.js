@@ -4,7 +4,7 @@ let userController = {};
 
 userController.read = function (req, res) {  
     knex("user")
-        .select("userId", "nickname", "email", "company", "location", "introduction")
+        .select("userId", "nickname", "email", "company", "location", "introduction","imageUrl")
         .where("userId", res.locals.userId) 
         .then((userInfo) => {
             res.json(userInfo);

@@ -6,6 +6,10 @@ let allProjectsController = {};
 // 프로젝트 6개씩 정보 반환 (my page에서 프로젝트 카드에 사용)
 allProjectsController.uploadImage = async (req, res)=> {
   const file = req.files.file;
+  //console.log(req.files,req.body.user);
+  console.log(JSON.stringify(req.body.user))
+  let user = req.body.user;
+  console.log(req.body)
   AWS.config.region = 'us-east-2'
   AWS.config.update({
     accessKeyId : process.env.ACCESS_KEY_ID,
@@ -13,10 +17,11 @@ allProjectsController.uploadImage = async (req, res)=> {
   });
   let s3_params ={
     Bucket: 'haeinabucket',
-    Key : '/public-read',
+    Key : `/${user}`,
     ContentType:file.mimetype,
     Body:file.data
   }
+  
   let s3obj = new AWS.S3({params:s3_params});
   s3obj.upload()
       .on('httpUploadProgress',function(evt){})

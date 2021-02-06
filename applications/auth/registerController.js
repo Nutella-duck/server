@@ -27,7 +27,7 @@ const saveUserInfo = async (id, nick, pwd, email, comp, loc, intro) => {
 
 registerController.register = async (req, res) => {
     // id는 3글자 이상, pwd는 5글자 이상 되도록 확인
-    console.log(res)
+    //console.log(res)
     const schema = Joi.object().keys({
       userId: Joi.string().alphanum().min(3).required(),
       nickname: Joi.string().required(),
