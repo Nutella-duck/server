@@ -20,12 +20,13 @@ const newIdChecker = async (id) => {
 }
   
 // 사용자 정보 디비에 저장
-const saveUserInfo = async (id, nick, pwd, email, comp, loc, intro) => {
+const saveUserInfo = async (id, nick, pwd, email, comp, loc, intro, image) => {
   pwd = bcrypt.hashSync(pwd, saltRounds);
   return knex("user")
-    .insert({ userId: id, nickname: nick, password: pwd, email: email, company: comp, location: loc, introduction: intro })
+    .insert({ userId: id, nickname: nick, password: pwd, email: email, company: comp, location: loc, introduction: intro, imageUrl: image })
 }
 
+// S3에 이미지 저장
 const uploadImage = async (file, userId) => {
   AWS.config.region = 'us-east-2'
   AWS.config.update({
@@ -44,9 +45,9 @@ const uploadImage = async (file, userId) => {
   s3obj.upload()
       .on('httpUploadProgress',function(evt){})
       .send(function (err,data) {
-        console.log(data.Location) 
+        return data.Location;
       })
-  return data.Location;
+
 }
 
 registerController.register = async (req, res) => {
