@@ -3,6 +3,7 @@ const knex = require("knex");
 const knexFile = require("./knexfile").development;
 const db = knex(knexFile);
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
 
 const app = express();
 const bodyParser = require("body-parser");
@@ -22,7 +23,7 @@ const jwtMiddleWare = require("./applications/auth/authorizationMW");
 //db.migrate.down();
 
 app.use(cors());
-
+app.use(fileUpload());
 app.all("/*", function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -40,7 +41,6 @@ app.use(bodyParser.json());
 app.use(express.static("swagger"));
 
 app.use("/auth", auth);
-
 app.use(jwtMiddleWare); // 토큰 검증 미들웨어.
 
 app.use("/admin", user);
@@ -52,6 +52,7 @@ app.use("/admin", run);
 app.use("/admin", sdk);
 
 app.use("/admin", hpo);
+
 
 app.listen(port, () => {
   console.log("Express listening on port", port);
